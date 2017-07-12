@@ -301,18 +301,29 @@
     - isAlphaToOneEnabled: Bool
     - isRasterizationEnabled: Bool
     - inputPrimitiveTopology: MTLPrimitiveTopologyClass
+      - MTLPrimitiveTopologyClass.unspecified
+      - MTLPrimitiveTopologyClass.point
+      - MTLPrimitiveTopologyClass.line
+      - MTLPrimitiveTopologyClass.triangle
     - maxTessellationFactor: Int
     - isTessellationFactorScaleEnabled: Bool
     - tessellationFactorFormat: MTLTessellationFactorFormat
+      - MTLTessellationFactorFormat.half
     - tessellationControlPointIndexType: MTLTessellationControlPointIndexType
+      - MTLTessellationControlPointIndexType.none
+      - MTLTessellationControlPointIndexType.uint16
+      - MTLTessellationControlPointIndexType.uint32
     - tessellationFactorStepFunction: MTLTessellationFactorStepFunction
+      - MTLTessellationFactorStepFunction.constant
+      - MTLTessellationFactorStepFunction.perPatch
+      - MTLTessellationFactorStepFunction.perInstance
+      - MTLTessellationFactorStepFunction.perPatchAndPerInstance
     - tessellationOutputWindingOrder: MTLWinding
     - tessellationPartitionMode: MTLTessellationPartitionMode
-    - enum MTLPrimitiveTopologyClass
-    - enum MTLTessellationFactorFormat
-    - enum MTLTessellationControlPointIndexType
-    - enum MTLTessellationFactorStepFunction
-    - enum MTLTessellationPartitionMode
+      - MTLTessellationPartitionMode.pow2
+      - MTLTessellationPartitionMode.integer
+      - MTLTessellationPartitionMode.fractionalOdd
+      - MTLTessellationPartitionMode.fractionalEven
     - rasterSampleCount: Int
 
 
