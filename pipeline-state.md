@@ -477,6 +477,13 @@ typedef struct D3D12_DEPTH_STENCIL_DESC {
   D3D12_DEPTH_STENCILOP_DESC BackFace;
 } D3D12_DEPTH_STENCIL_DESC;
 
+typedef struct D3D12_DEPTH_STENCILOP_DESC {
+  D3D12_STENCIL_OP      StencilFailOp;
+  D3D12_STENCIL_OP      StencilDepthFailOp;
+  D3D12_STENCIL_OP      StencilPassOp;
+  D3D12_COMPARISON_FUNC StencilFunc;
+} D3D12_DEPTH_STENCILOP_DESC;
+
 typedef struct VkPipelineDepthStencilStateCreateInfo {
     VkStructureType                           sType;
     const void*                               pNext;
@@ -492,8 +499,39 @@ typedef struct VkPipelineDepthStencilStateCreateInfo {
     float                                     maxDepthBounds;
 } VkPipelineDepthStencilStateCreateInfo;
 
+typedef struct VkStencilOpState {
+    VkStencilOp    failOp;
+    VkStencilOp    passOp;
+    VkStencilOp    depthFailOp;
+    VkCompareOp    compareOp;
+    uint32_t       compareMask;
+    uint32_t       writeMask;
+    uint32_t       reference;
+} VkStencilOpState;
+
+MTLDepthStencilDescriptor
+  - depthCompareFunction: MTLCompareFunction
+  - isDepthWriteEnabled: Bool
+  - backFaceStencil: MTLStencilDescriptor!
+  - frontFaceStencil: MTLStencilDescriptor!
+
+MTLStencilDescriptor
+  - stencilFailureOperation: MTLStencilOperation
+  - depthFailureOperation: MTLStencilOperation
+  - depthStencilPassOperation: MTLStencilOperation
+  - stencilCompareFunction: MTLCompareFunction
+  - readMask: UInt32
+  - writeMask: UInt32
+
  - :: depthBoundsTestEnable, minDepthBounds, maxDepthBounds
 ~~~
+
+Notes:
+  - Metal depth stencil state is not stored in the pipeline state but instead set on a `MTLRenderCommandEncoder`. It is included here for sake of comparison.
+  - Metal implicitly enables and disables the depth and stencil tests. if `depthCompareFunction == MTLCompareFunctionAlways`, the depth test is off. If `backFaceStencil == nil` or `frontFaceStencil = nil`, the back or front face stencil tests, respectively, are disabled.
+  - D3D12 does not have separate read / write masks. Vulkan and Metal have per-face read / write masks.
+  - D3D12 does not have separate stencil reference values. Vulkan and Metal have per-face stencil references.
+  - Vulkan can do both static and dynamic stencil references. D3D12 and Metal on have dynamic stencil references.
 
 ### Multisampling state
 
